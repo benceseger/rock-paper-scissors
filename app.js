@@ -64,11 +64,12 @@ function playRound(playerSelection, computerSelection) {
         console.log("You Won!");
     }
 }
-game();
-function game() {
-    playRound();
-    playRound();
-    playRound();
-    playRound();
-    playRound();
-}
+
+// game();
+// function game() {
+//     playRound();
+//     playRound();
+//     playRound();
+//     playRound();
+//     playRound();
+// }
