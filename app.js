@@ -14,7 +14,7 @@
 
     playRound() function which will determine how the round will be played
 
-    playEound() arguments: playerSelection and computerSelection
+    playRound() arguments: playerSelection and computerSelection
     
     !! IMPORTANT !!
     !! PLAYER'S INPUT MUST BE CASE-INSENSITIVE! !!
@@ -40,28 +40,67 @@
     IF STATEMENT TO CHECK WHO WON
     (playerSelection === "Rock" && computerSelection === "Paper") || (playerSelection === "Paper" && computerSelection === "Scissors") || (playerSelection === "Scissors" && computerSelection === "Rock"))
 */
+
+// * TODO: CREATING THE NEW UI, CENTERING THE BUTTONS, STYLE-ING THEM
+// * INSTEAD OF USING PROMPT, addEventListener will be used to listen for clicks
+// * ON TOP OF THE BUTTONS, ROUND NO WILL BE OUTPUTTED
+
+const buttons = document.querySelectorAll('.game-button');
+const reset = document.getElementById('reset');
+
 function computerPlay() {
     let computerChoices = ["Rock", "Paper", "Scissors"];
     return computerChoices[Math.floor(Math.random() * computerChoices.length)]
 }
 
-//const playerSelection = prompt("Choose your weapon (rock, paper, scissors)");
+let playerSelection = '';
+let round = 0;
+let playerScore = 0;
+let cpuScore = 0;
 const computerSelection = computerPlay();
+
+
+buttons.forEach((button) => {
+    button.addEventListener('click', () => {
+        playerSelection = button.id;
+        playRound(playerSelection, computerSelection)
+        round += 1;
+        document.getElementById('roundNumber').textContent = round;
+        if (round == 5) {
+            if (playerScore > cpuScore) {
+                document.getElementById('newGame').textContent = 'Player Won!';
+            } else if (playerScore < cpuScore) {
+                document.getElementById('newGame').textContent = 'Computer Won!';
+            } else if (playerScore == cpuScore) {
+                document.getElementById('newGame').textContent = 'Draw!';
+            }
+        }
+    })
+})
+
+reset.addEventListener('click', () => {
+    round = 0;
+    document.getElementById('roundNumber').textContent = 0;
+    document.getElementById('newGame').textContent = '';
+})
 
 
 function playRound(playerSelection, computerSelection) {
     computerSelection = computerPlay().toLowerCase();
-    playerSelection = prompt("Choose your weapon (rock, paper, scissors)");
     playerSelection = playerSelection.toLowerCase();
     console.log("Player: " + playerSelection);
     console.log("Computer: " + computerSelection);
 
     if (playerSelection === computerSelection) {
         console.log("Draw");
+        playerScore += 0;
+        cpuScore += 0;
     } else if ((playerSelection === "rock" && computerSelection === "paper") || (playerSelection === "paper" && computerSelection === "scissors") || (playerSelection === "scissors" && computerSelection === "rock")) {
         console.log("You Lost");
+        cpuScore += 1;
     } else if ((playerSelection === "rock" && computerSelection === "scissors") || (playerSelection === "paper" && computerSelection === "rock") || (playerSelection === "scissors" && computerSelection === "paper")) {
         console.log("You Won!");
+        playerScore += 1;
     }
 }
 
